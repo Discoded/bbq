@@ -1,0 +1,13 @@
+[Unit]
+Description=Back End sending temperature data to client
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/BBQ_Project/bbq_server
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+User=pi
+Environment=NODE_ENV=production PORT=4000
+
+[Install]
+WantedBy=multi-user.target
