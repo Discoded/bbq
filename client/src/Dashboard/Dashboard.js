@@ -15,15 +15,16 @@ const Dashboard = (props) => {
     const [testPoints, setTest] = useState([]);
     const [points, setPoints] = useState(()=> {
         const localStoragePoints = localStorage.getItem("data-points");
-        if(localStoragePoints) {
-            const parsed = JSON.parse(localStoragePoints);
+        var parsed = JSON.parse(localStoragePoints);
+        /* if(parsed) {
             parsed.map((singlePoint) => {
-                return singlePoint[0] = new Date(parseInt(singlePoint[0]))
+                return singlePoint = new Date(parseInt(singlePoint[0]))
             })
+            console.log("From parsed: ");
             console.log(parsed);
-        }
+        } */
         
-        return false ? JSON.parse(localStoragePoints) : [[new Date(), 0]];
+        return false ? parsed : [[Date.now(), 0]];
     });
     const [currentTemp, setCurrentTempState] = useState(0);
     const [tempTarget, setTempTarget] = useState(300);
@@ -41,16 +42,18 @@ const Dashboard = (props) => {
         );
         
     }, []);
-    // Runs when chat changes
+    // Runs when currentTemp changes
     useEffect(() => {
         // Add current Temp to the temperatures list
-        setPoints([...points, [new Date(), currentTemp]])
-        localStorage.setItem('data-points', JSON.stringify(points));
-        // Trim the list to the latest 43200, (1/50 chance )
-        // Data incoming 2 per second, hold the latest 6 hours of data.
-        if (Math.floor(Math.random() * 50) + 1 == 1 && points.length > 43200) {
+        setPoints([...points, [Date.now(), currentTemp]]);
+        
+        // Save data to local Storage
+        //localStorage.setItem('data-points', JSON.stringify(points));
+        // Trim the list to the latest 21600 points, (1/10 chance )
+        // Data incoming 2 per second, hold the latest 3 hours of data.
+        if (Math.floor(Math.random() * 5) + 1 == 1 && points.length > 14400) {
             console.log('Before slice: ' + points);
-            setPoints([...points].slice(43200))
+            setPoints([...points].slice(14400));
         }
     }, [currentTemp]);
     
@@ -70,6 +73,9 @@ const Dashboard = (props) => {
 
     const renderChat = () => {
         
+    }
+    const handleButton = () => {
+        console.log(points)
     }
 
     return (
@@ -93,14 +99,7 @@ const Dashboard = (props) => {
                     </TextField> 
                     {/* <Button type="submit">Test</Button> */}
             </form>
-            <div className="card">
-                <div >
-                    <h1>Log</h1>
-                    <ul className='render-chat'>
-                        {renderChat()}
-                    </ul>
-                </div>
-            </div>
+            <Button variant="contained" color="secondary" onClick={handleButton}>Log</Button>
         </Card>
     );
 }

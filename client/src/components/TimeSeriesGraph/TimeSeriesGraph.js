@@ -30,6 +30,7 @@ let i = 0;
 let timeseries = null;
 
 class TimeSeriesGraph extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -45,9 +46,9 @@ class TimeSeriesGraph extends Component {
         
     }
 
-    componentDidUpdate() {
+    /* componentDidUpdate() {
         timeseries = new TimeSeries(this.state);
-    }
+    } */
 
     handleTrackerChanged = t => {
         if (t) {

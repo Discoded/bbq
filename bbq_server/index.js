@@ -28,7 +28,7 @@ io.on('connection', socket => {
     var intervalId = setInterval(() => {
         spi.read(4, (error, data) => {
             if(error) console.error(e);
-            //socket.emit('message', {name: 'RNG', message: Math.floor(Math.random() * 500)});
+            //socket.emit('message', Math.floor(Math.random() * 500);
             socket.emit('message', data.readUInt32LE());
             //console.log("sent: ", new Date())
         });
